@@ -4,10 +4,10 @@ import * as http from 'http';
 const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/plain');
 
-    if (req.url === '/'){
+    if (req.url === '/') {
         res.statusCode = 200;
         res.end('Home page');
-    }else if (req.url === '/sobre'){
+    } else if (req.url === '/sobre') {
         res.statusCode = 200;
         res.end('About page');
     }
