@@ -1,11 +1,20 @@
 import express from 'express';
+import { PrismaClient } from './generated/prisma';
 
 const port = 3000;
 const app = express();
+const prisma = new PrismaClient();
 
+app.get("/movies", async (_, res) => {
+   const movies = await prisma.movie.findMany();
+   res.json(movies);
+});
+
+/*
 app.get('/', (req, res) => {
    res.send('Home page');
 });
+*/
 
 app.listen(port, () => {
    console.log(`Servidor em execução em http://localhost:${port}`);
