@@ -57,6 +57,31 @@ app.post('/movies', async (req, res) => {
    res.status(201).send();
 });
 
+app.put('/movies/:id', async (req, res) => {
+try{
+   const id = parseInt(req.params.id, 10);
+   // precisei adicionar a variável acima, pois estava dando erro e o ChatGPT instruiu a declará-la, pois ela chega como string
+   
+   const movie = await prisma.movie.findUnique({
+      where: { id },
+   });
+
+   if (!movie) {
+      return res.status(404).send({ message: "Filme não encontrado" });
+   }
+
+   const data = { ...req.body };
+   data.release_date = data.release_date ? new Date(data.release_date) : undefined;
+   
+   await prisma.movie.update({ where: { id }, data });
+   
+   }catch(error){
+      return res.status(500).send({ message: "Falha ao atualizar o registro" });
+   }
+
+   res.status(200).send()
+});
+
 app.listen(port, () => {
    console.log(`Servidor em execução em http://localhost:${port}`);
 });
