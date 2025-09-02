@@ -101,6 +101,34 @@ app.delete('/movies/:id', async (req, res) => {
    res.status(200).send();
 });
 
+app.get("/movies/:genderName", async(req, res) => {
+   try {
+   const genderName = req.params.genderName
+   //Precisei declarar genderName aqui tb, senão dava erro
+
+   const moviesFilteredByGenderName = await prisma.movie.findMany({
+      include: {
+         genres: true,
+         languages: true,
+      },
+      where: {
+         genres: {
+            name: {
+               equals: genderName,
+               mode: "insensitive",
+            },
+         },
+      },
+   });
+
+   res.status(200).send(moviesFilteredByGenderName);
+   //Colocou aqui, pq essa variável está sendo populada na parte de cima, embaixo ela dava erro
+
+   } catch (error) {
+      return res.status(500).send({ message: "Falha ao atualizar um filme" });
+   }
+});
+
 app.listen(port, () => {
    console.log(`Servidor em execução em http://localhost:${port}`);
 });
