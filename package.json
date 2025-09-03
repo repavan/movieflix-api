@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tsx watch src/server-aula02.ts"
+    "dev": "npx tsx watch src/server-aula02.ts",
+    "start": "node dist/src/server-aula02.js",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
